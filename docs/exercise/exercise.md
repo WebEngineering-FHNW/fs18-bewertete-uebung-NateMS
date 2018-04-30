@@ -2,10 +2,18 @@
 
 ## Commit Proposal
 
-Matriculation Number: <to be filled by student>
+Matriculation Number: 16-967-655
 
 Project idea short description: 
 
+A web application to easily track your school grades.
+- simple Login
+- CRUD features for a semester
+- CRUD features for a subject / module
+- CRUD features for a grade
+- simple overview of a per subject and semester average
+
+grades can have a varying multiplicator (either *1 or *2) and there can also be finals, which will be 50% of the subject grade.
 
 ## Project confirmation
 
