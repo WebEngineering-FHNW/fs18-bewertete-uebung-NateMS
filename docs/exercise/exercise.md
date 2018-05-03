@@ -17,7 +17,11 @@ grades can have a varying multiplicator (either *1 or *2) and there can also be 
 
 ## Project confirmation
 
-< to be filled by lecturer>
+confirmed.
+
+Cool idea. I hope you have only good grades to enter!
+Have fun.
+D. König
 
 
 ## Project delivery <to be filled by student>
