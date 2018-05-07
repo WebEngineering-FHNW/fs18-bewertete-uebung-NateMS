@@ -1,4 +1,4 @@
-package exercise
+package gradr
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration
