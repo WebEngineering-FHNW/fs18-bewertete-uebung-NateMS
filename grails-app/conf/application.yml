@@ -2,7 +2,7 @@
 grails:
     profile: web
     codegen:
-        defaultPackage: exercise
+        defaultPackage: ch.fhnw.webec.gradr
     spring:
         transactionManagement:
             proxies: false

@@ -1,4 +1,4 @@
-package gradr
+package ch.fhnw.webec.gradr
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration
