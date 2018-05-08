@@ -11,14 +11,6 @@
         <h1>Welcome ${name}!</h1>
 
         <h4>${flash.message}</h4>
-
-        <p>There are ${courseTotal} courses in this semester.</p>
-
-        <form action="/home/updateName" method="post" style="margin: 0 auto; width:320px">
-            <input type="text" name="name" value="" id="name">
-            <input type="submit" name="Update name" value="Update name" id="Update name">
-        </form>
-
     </section>
 </div>
 

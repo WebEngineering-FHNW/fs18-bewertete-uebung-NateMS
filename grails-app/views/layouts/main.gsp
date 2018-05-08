@@ -33,6 +33,9 @@
                     <g:pageProperty name="page.nav" />
                 </ul>
             </div>
+            <div id="loginHeader">
+                <g:loginControl />
+            </div>
         </div>
     </div>
 
