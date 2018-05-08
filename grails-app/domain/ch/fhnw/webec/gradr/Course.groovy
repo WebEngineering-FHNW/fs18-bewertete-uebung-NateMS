@@ -4,9 +4,12 @@ class Course {
 
     String name
     static belongsTo = [ semester: Semester ]
-
-  //  List<Grade> grades = new ArrayList<>()
+    static hasMany = [grades:Grade]
 
     static constraints = {
+    }
+
+    User user() {
+        return this.semester.user
     }
 }

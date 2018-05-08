@@ -10,4 +10,12 @@ class Grade {
 
     static constraints = {
     }
+
+    Semester semester() {
+        return this.course.semester
+    }
+
+    User user() {
+        return this.course.semester.user
+    }
 }

@@ -2,12 +2,19 @@ package ch.fhnw.webec.gradr
 
 class User {
 
-   // List<Semester> semesters = new ArrayList<>()
+    static hasMany = [semesters:Semester]
+
     String email
     String password
     String firstname
     String lastname
 
     static constraints = {
+        email(unique:true)
+        password(password:true)
+    }
+
+    String name() {
+        return firstname + " " + lastname
     }
 }

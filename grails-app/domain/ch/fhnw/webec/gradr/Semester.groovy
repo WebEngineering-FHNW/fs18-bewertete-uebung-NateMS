@@ -2,7 +2,7 @@ package ch.fhnw.webec.gradr
 
 class Semester {
 
-  //  List<Course> courses = new ArrayList<>()
+    static hasMany = [courses:Course]
     String description
 
     static belongsTo = [ user: User ]
