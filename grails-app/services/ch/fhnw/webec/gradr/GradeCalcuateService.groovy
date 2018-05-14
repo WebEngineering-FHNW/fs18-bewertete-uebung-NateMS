@@ -7,7 +7,7 @@ class GradeCalcuateService {
 
     def getAverage(List<Grade> grades) {
         float sum = 0
-        int count = grades.size()
+        float count = 0
 
         boolean hasFinal = false
         float finalGrade = 1
@@ -16,6 +16,7 @@ class GradeCalcuateService {
         for (Grade grade : grades) {
             if (!grade.isFinal) {
                 sum += grade.grade * grade.weight
+                count += 1 * grade.weight
                 continue
             }
 
@@ -25,19 +26,30 @@ class GradeCalcuateService {
 
             hasFinal = true
             finalGrade = grade.grade
-            count--;
         }
 
-        float average = getAverage(sum, count)
+        double average = getAverageToTenth(sum, count)
 
         if (hasFinal) {
-            return getAverage((float)average + finalGrade, 2)
+            return getAverageToQuarter(average + finalGrade, 2)
         }
 
         return average
     }
 
-    def getAverage(float sum, int count) {
-        return (sum / count)
+    private static def getAverageToTenth(sum, count) {
+        return Double.parseDouble(String.format("%.1f", sum / count))
+    }
+
+    private static def getAverageToQuarter(sum, count) {
+        return Math.round((float)(sum / count) * 4) / 4f
+    }
+
+    def isPassing(Grade grade) {
+        return isPassing(grade.grade)
+    }
+
+    def isPassing(double grade) {
+        return grade >= 3.75
     }
 }
