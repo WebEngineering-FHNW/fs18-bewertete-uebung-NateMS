@@ -4,17 +4,15 @@ class UserController {
 
     static scaffold = User
 
-    def login = {}
-
     def authenticate = {
         def user = User.findByEmailAndPassword(params.email, params.password)
         if (user) {
             session.user = user
             flash.message = "Hello ${user.name()}!"
-            redirect(controller: "semester")
+            redirect(controller: "semester" action: "index")
         } else {
             flash.message = "Sorry, ${params.email}. Please try again."
-            redirect(action: "login")
+            redirect(controller: "home")
         }
     }
 
