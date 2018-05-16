@@ -8,7 +8,7 @@ buildscript {
         classpath "gradle.plugin.com.energizedwork.webdriver-binaries:webdriver-binaries-gradle-plugin:1.1"
         classpath "gradle.plugin.com.energizedwork:idea-gradle-plugins:1.4"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.6"
+        classpath 'com.bertramlabs.plugins:asset-pipeline-gradle:2.14.6'
     }
 }
 
@@ -63,6 +63,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.6.0"
     testRuntime "org.seleniumhq.selenium:selenium-remote-driver:3.6.0"
     testRuntime "org.seleniumhq.selenium:selenium-api:3.6.0"
+    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.14.6'
 }
 
 bootRun {

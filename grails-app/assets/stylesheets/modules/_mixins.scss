@@ -1,0 +1,39 @@
+@mixin desktop {
+  @media only screen and (max-width: 60em) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 40em) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media only screen and (max-width: 30em) {
+    @content;
+  }
+}
+
+@mixin transition {
+  transition: 0.3s;
+}
+
+@mixin boxshadow($color) {
+  box-shadow: 0 2px 5px 0 $color;
+}
+@mixin hover {
+  &:hover,
+  &:active,
+  &:focus,
+  &.active {
+    @content;
+  }
+}
+
+@mixin active {
+  &.active {
+    @content;
+  }
+}
