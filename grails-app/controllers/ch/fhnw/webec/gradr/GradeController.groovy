@@ -9,13 +9,6 @@ class GradeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def auth() {
-        if(!session.user) {
-            redirect(controller:"home")
-            return false
-        }
-    }
-
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond gradeService.list(params), model:[gradeCount: gradeService.count()]
