@@ -39,33 +39,72 @@
             margin: 1em 0;
             padding: 0;
         }
+
+        code {
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border: 1px solid #BCBEC0;
+            padding: 2px;
+            background-color: #eee;
+            font:12px Monaco,Consolas,"Andale  Mono","DejaVu Sans Mono",monospace
+        }
     </style>
 </head>
+<body>
+    <header>
+        <h1>Gradr - a webec Exercise</h1>
+        <hr>
+    </header>
+    <main>
+        <article>
+            <h2>Project Description</h2>
+            <p>This is a very simple webapplication which allows users to keep track of their grades. Users can login, see their semesters, courses, and grades. The grade average is automatically displayed foreach course and also the overall grade for the semester.</p>
+        </article>
+        <article>
+            <h2>Project Structure</h2>
 
-    <body>
-        <header>
-            <h1>Gradr - a webec Exercise</h1>
-            <hr>
-        </header>
-        <main>
-            <article>
-                <section>
-                    <h2>Project Description</h2>
-                </section>
-                <section>
-                    <h2>Project Structure</h2>
-                    <p>This Project is following the basic MVC pattern of the Grails framework.</p>
-                </section>
+            <p>Gradr has been implemented with the following technologies:</p>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Groovy</li>
+                <li>Grails</li>
+                <li><a href="http://getskeleton.com" target="_blank">Skeleton</a> (Lightweight CSS Framework)</li>
+            </ul>
 
-                <section>
-                    <h2>Development Environment</h2>
-                </section>
-            </article>
-        </main>
-        <footer>
-            <hr>
-            <p>created by Nadim Salloum, 2018</p>
-        </footer>
-    </body>
+            <section>
+                <h3>Backend</h3>
+                <p>This Project is following the basic MVC pattern of the Grails framework. The following Domain classes are used for this application:</p>
+                <ul>
+                    <li>Course</li>
+                    <li>Grade</li>
+                    <li>Semester</li>
+                    <li>User</li>
+                </ul>
 
+                <p>Each of those classes have their respective controllers and services. The Logic for the calculation of the grade averages is located in<br>
+                    <code>grails-app/services/GradeCalculateService.groovy</code>.</p>
+            </section>
+
+            <section>
+                <h3>Frontend</h3>
+                <p>The Frontend is very simple. The views are located in <code>grails-app/views</code>. These are all <code>.gsp</code> files. All View files extend from the <code>layouts/main.gsp</code> base layout. All assets are located in <code>grails-app/assets</code>.</p>
+            </section>
+        </article>
+        <article>
+            <h2>Development Environment</h2>
+            <p>I used IntelliJ to work on this project.</p>
+            <p>
+                <b>start</b> the application by running: <code>./grailsw run-app</code><br>
+                <b>test</b> the application by running: <code>./grailsw test-app</code><br>
+            </p>
+            <p>The Application can be looked at by visiting <a href="localhost:8080">localhost:8080</a>.</p>
+        </article>
+    </main>
+    <footer>
+        <hr>
+        <p>created by Nadim Salloum, 2018</p>
+    </footer>
+</body>
 </html>
