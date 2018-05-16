@@ -13,6 +13,7 @@ class AuthInterceptor {
             redirect controller: 'home'
             false
         }
+        true
     }
 
     boolean after() { true }

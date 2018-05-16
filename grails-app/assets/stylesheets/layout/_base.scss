@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  color: #233038;
+  color: $font-color;
 }
 
 body {
@@ -26,15 +26,17 @@ body {
 .content-wrapper {
   margin-left: auto;
   margin-right: auto;
-  box-shadow: #0FA0CE;
   padding: 20px 30px;
   border-radius: 2px;
-  background-color: rgba(240,240, 240, 0.92);
+  background-color: rgba(240, 240, 240, 0.92);
   height: 500px;
+
+  @include boxshadow($border-color);
 }
 
-
-
-.footer {
-
+a {
+  color: $link-color;
+  @include hover {
+    color: darken($link-color, 5%);
+  }
 }
