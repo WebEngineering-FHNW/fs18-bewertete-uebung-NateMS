@@ -18,13 +18,18 @@
        <div class="middle">
            <div class="container main-wrapper">
                <header class="header">
-                   <a class="logo" href="${createLink(uri: '/')}">Gradr</a>
-                    <g:if test="${session.user}">
-                       <p id="logoutWrapper">
-                           ${session.user.name()}
-                           <a href="/user/logout">Logout</a>
-                       </p>
-                    </g:if>
+                   <span class="logo-wrapper">
+                       <a class="logo" href="${createLink(uri: '/')}"><g:logo class="test"/>Gradr</a>
+                   </span>
+                   <span class="nav-wrapper">
+
+                       <g:if test="${session.user}">
+                           <p id="logoutWrapper">
+                               ${session.user.name()}
+                               <a href="/user/logout">Logout</a>
+                           </p>
+                       </g:if>
+                   </span>
                </header>
                <section class="content-wrapper">
                    <g:layoutBody/>

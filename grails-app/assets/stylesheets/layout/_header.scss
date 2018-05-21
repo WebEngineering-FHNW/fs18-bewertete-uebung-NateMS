@@ -1,17 +1,41 @@
 .header {
   margin: 10px;
   position: relative;
+  height: 300px;
 
   p {
     padding-bottom: 0;
     margin-bottom: 0;
   }
 
-  .logo {
-    font-size: 51px;
-    display: inline-block;
-    color: #D74D3C;
-    text-decoration: none;
+  .logo-wrapper {
+    display: block;
+    top: 30px;
+    width: 100%;
+    padding: 25px;
+    margin: 0 auto;
+    position: relative;
+
+    .svg-logo {
+      width: 198px;
+      height: 198px;
+      position: absolute;
+      transform: rotate(-27deg);
+      top: 5%;
+      left: 14%;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #D74D3C;
+      font-size: 98px;
+      height: 160px;
+      display: inline-block;
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+    }
   }
 
   #logoutWrapper {
