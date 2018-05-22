@@ -6,6 +6,7 @@ class AuthInterceptor {
         matchAll()
                 .excludes(controller: 'home')
                 .excludes(controller: 'user', action: 'authenticate')
+                .excludes(uri: "/static/*")
     }
 
     boolean before() {

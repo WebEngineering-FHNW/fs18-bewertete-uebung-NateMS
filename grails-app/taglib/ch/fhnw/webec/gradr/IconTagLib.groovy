@@ -14,7 +14,7 @@ class IconTagLib {
             className = className + ' ' + attrs.class
         }
 
-        out << '<object type="image/svg+xml" class="' + className + '" data="' + path + '"></object>'
+        out << '<img class="' + className + '" src="' + path + '"/>'
     }
 
     def logo = { attrs ->
@@ -25,6 +25,10 @@ class IconTagLib {
             className = className + ' ' + attrs.class
         }
 
-        out << '<object type="image/svg+xml" class="' + className + '" data="/static/logo.svg"></object>'
+        out << '<img class="' + className + '" src="/static/logo.svg"/>'
+    }
+
+    def submit = { attrs ->
+        out << '<input class="delete icon icon-delete icon-submit" type="image" src="/static/icons/' + iconPack + '/trash.svg" onclick="return confirm(\'Are you sure?\');"/>'
     }
 }

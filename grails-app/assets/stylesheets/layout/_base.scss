@@ -26,17 +26,66 @@ body {
 .content-wrapper {
   margin-left: auto;
   margin-right: auto;
-  padding: 20px 30px;
+  padding: $content-padding;
   border-radius: 2px;
-  background-color: rgba(240, 240, 240, 0.92);
-  height: 500px;
-
+  background-color: $body-background-color;
+  min-height: 500px;
+  position: relative;
   @include boxshadow($border-color);
 }
 
 a {
   color: $link-color;
+
   @include hover {
     color: darken($link-color, 5%);
   }
+}
+
+.table-list {
+  width: 100%;
+  margin-top: 35px;
+
+  thead {
+    th {
+      border: none;
+      font-weight: bold;
+      color: lighten($font-color, 20%);
+      font-size: $font-size - 3;
+      padding: 0;
+      padding-left: 15px;
+    }
+  }
+
+  tbody {
+    tr {
+      border: none;
+
+      @include hover {
+        background-color: $body-background-color;
+      }
+
+      td {
+      }
+    }
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 10px;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-right: 10px;
+  }
+}
+
+h1 {
+  display: inline-block;
+  font-size: 20px;
+  color: $font-color;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
 }

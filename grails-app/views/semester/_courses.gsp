@@ -1,12 +1,12 @@
 <g:if test="${semester.courses?.size()}">
-    <h3>average: <g:avg val="${semester.average()}"/></h3>
-    <table>
+    <h3 class="avg"><g:avg pre="avg" val="${semester.average()}"/></h3>
+    <table class="table-list">
         <thead>
         <tr>
             <th>course</th>
             <th>nr. of grades</th>
             <th>avg</th>
-            <th>action</th>
+            <th>
         </tr>
         </thead>
         <tbody>
@@ -14,8 +14,12 @@
             <tr>
                 <td><g:link class="" controller="course" action="show" params="[id:course.id]">${course.name}</g:link></td>
                 <td>${course.grades?.size()}</td>
-                <td><g:avg val="${course.average()}"/></td>
-                <td><button class="button button-delete"><g:icon name="edit"/></button><button class="button button-delete"><g:icon name="trash"/></button></td>
+                <td><g:avg pre="avg" val="${course.average()}"/></td>
+                <td>
+                    <g:form class="delete-form" resource="${course}" method="DELETE">
+                        <g:submit/>
+                    </g:form>
+                </td>
             </tr>
         </g:each>
         </tbody>

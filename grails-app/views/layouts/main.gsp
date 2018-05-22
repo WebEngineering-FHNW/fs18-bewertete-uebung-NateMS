@@ -13,7 +13,7 @@
 
         <g:layoutHead/>
     </head>
-    <body class="failing">
+    <body>
         <div class="outer">
            <div class="middle">
                <div class="container main-wrapper">

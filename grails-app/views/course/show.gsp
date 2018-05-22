@@ -17,21 +17,21 @@
         </content>
 
         <div id="show-course" class="content scaffold-show" role="main">
-            <h1>${course.name}</h1>
+            <h1>${course.name}<g:link class="icon-only" action="edit" resource="${course}"><g:icon name="edit"/></g:link></h1>
 
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
             <g:if test="${course.grades.size()}">
-                <h2>Average: ${course.average()}</h2>
-                <table>
+                <h3 class="avg"><g:avg pre="avg" val="${course.average()}"/></h3>
+                <table class="table-list">
                     <thead>
                     <tr>
                         <th>grade</th>
                         <th>weight</th>
                         <th>isFinal</th>
-                        <th>action</th>
+                        <th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,18 +40,16 @@
                             <td>${grade.grade}</td>
                             <td>${grade.weight}</td>
                             <td>${grade.isFinal}</td>
-                            <td><button class="button button-danger"><g:icon name="trash"/></button></td>
+                            <td>
+                                <g:form class="delete-form" resource="${grade}" method="DELETE">
+                                    <g:submit/>
+                                </g:form>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>
                 </table>
             </g:if>
-            <g:form resource="${this.course}" method="DELETE">
-                <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${this.course}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                </fieldset>
-            </g:form>
         </div>
     </body>
 </html>
