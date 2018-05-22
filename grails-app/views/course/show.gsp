@@ -6,20 +6,46 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#show-course" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
+
+        <content tag="navbar">
             <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="list" controller="home" action="index">Home</g:link></li>
+                <li><g:link class="list" controller="semester" action="index">Semesters</g:link></li>
+                <li><g:link class="list" controller="semester" action="show" params="[id:course.semester.id]">${course.semester.description}</g:link></li>
+                <li>${course.name}</li>
             </ul>
-        </div>
+        </content>
+
         <div id="show-course" class="content scaffold-show" role="main">
-            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
+            <h1>${course.name}</h1>
+
             <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+                <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:display bean="course" />
+
+            <g:if test="${course.grades.size()}">
+                <h2>Average: ${course.average()}</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>grade</th>
+                        <th>weight</th>
+                        <th>isFinal</th>
+                        <th>action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <g:each var="grade" in="${course.grades}">
+                        <tr>
+                            <td>${grade.grade}</td>
+                            <td>${grade.weight}</td>
+                            <td>${grade.isFinal}</td>
+                            <td><button class="button button-danger"><g:icon name="trash"/></button></td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </g:if>
             <g:form resource="${this.course}" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.course}"><g:message code="default.button.edit.label" default="Edit" /></g:link>

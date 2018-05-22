@@ -38,10 +38,40 @@
     }
   }
 
-  #logoutWrapper {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    margin: 0;
+  .nav-wrapper {
+
+    nav {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      margin: 0;
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          display: inline-block;
+          margin: 0;
+          padding: 0;
+
+          &:before {
+            content: '> '; // add nav carets
+          }
+
+          &:first-child:before {
+            content: ''; // first one has no caret
+          }
+        }
+      }
+    }
+
+    #logoutWrapper {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+    }
   }
 }

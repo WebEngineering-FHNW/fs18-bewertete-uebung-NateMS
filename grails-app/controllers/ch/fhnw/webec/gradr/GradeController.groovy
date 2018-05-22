@@ -14,17 +14,6 @@ class GradeController {
         respond gradeService.list(params), model:[gradeCount: gradeService.count()]
     }
 
-    def show(Long id) {
-        Grade grade = gradeService.get(id)
-
-        if(!(session.user?.email == grade.user().email) ){
-            flash.message = "Sorry, you can only edit your own entries."
-            redirect(action:index)
-        }
-
-        respond grade
-    }
-
     def create() {
         respond new Grade(params)
     }
@@ -88,7 +77,7 @@ class GradeController {
     }
 
     def delete(Long id) {
-        if (id == null) {
+        if (id == null || session.user?.email != grade.user().email) {
             notFound()
             return
         }
