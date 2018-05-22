@@ -1,4 +1,4 @@
-<g:if test="${semester.courses?.size()}">
+<g:if test="${courses?.size()}">
     <h3 class="avg"><g:avg pre="avg" val="${semester.average()}"/></h3>
     <table class="table-list">
         <thead>
@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        <g:each var="course" in="${semester.courses}">
+        <g:each var="course" in="${courses}">
             <tr>
                 <td><g:link class="" controller="course" action="show" params="[id:course.id]">${course.name}</g:link></td>
                 <td>${course.grades?.size()}</td>
@@ -25,3 +25,6 @@
         </tbody>
     </table>
 </g:if>
+<g:else>
+    <h4>there are no courses in this semester</h4>
+</g:else>

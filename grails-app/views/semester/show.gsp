@@ -13,6 +13,9 @@
                 <li>${semester.description}</li>
             </ul>
         </content>
+
+        <g:link class="button-primary button button-create with-icon" controller="grade" action="create"><g:icon name="document"/>add grade</g:link>
+
         <div id="show-semester" class="content scaffold-show" role="main">
 
             <h1>${semester.description}<g:link class="icon-only" action="edit" resource="${semester}"><g:icon name="edit"/></g:link></h1>

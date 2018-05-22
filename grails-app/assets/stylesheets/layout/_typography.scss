@@ -19,6 +19,10 @@ span.average {
     font-weight: bold;
     padding: 0 4px;
     font-size: $font-size + 4;
+
+    &.failing {
+      color: #D74D3C;
+    }
   }
 }
 
@@ -39,4 +43,11 @@ h3 {
       font-size: 40px;
     }
   }
+}
+
+h4 {
+  text-align: center;
+  font-style: italic;
+  font-size: 25px;
+  padding-top: 30px;
 }

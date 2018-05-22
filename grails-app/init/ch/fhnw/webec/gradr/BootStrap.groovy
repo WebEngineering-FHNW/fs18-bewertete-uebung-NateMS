@@ -21,9 +21,9 @@ class BootStrap {
         List<Course> courses = [ml, conpr, algd2, webec, cpp, eti, depa]
 
         for (course in courses) {
-            int numOfGrades = ThreadLocalRandom.current().nextInt(1, 5 + 1);
-            for (int i = 1; i < numOfGrades; i++) {
-                int grade = ThreadLocalRandom.current().nextInt(10, 60 + 1);
+            int numOfGrades = ThreadLocalRandom.current().nextInt(2, 5);
+            for (int i = 0; i < numOfGrades; i++) {
+                int grade = ThreadLocalRandom.current().nextInt(20, 60 + 1);
 
                 new Grade(weight: 1, grade: (double)grade / 10, course: course).save()
             }

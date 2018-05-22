@@ -3,11 +3,15 @@ package ch.fhnw.webec.gradr
 class AverageTagLib {
     def avg = { attrs ->
 
+        def cl = 'grade'
+
         if (!attrs.val || attrs.val == 0.0) {
             attrs.val = 'N/A'
+        } else if (attrs.val < 4.0) {
+            cl = cl + ' failing'
         }
 
-        attrs.val = '<span class="grade">' + attrs.val + '</span>'
+        attrs.val = '<span class="' + cl + '">' + attrs.val + '</span>'
 
         if (attrs.pre) {
             attrs.pre = '<span class="pre">' + attrs.pre + '</span>'

@@ -16,40 +16,43 @@
             </ul>
         </content>
 
-        <div id="show-course" class="content scaffold-show" role="main">
-            <h1>${course.name}<g:link class="icon-only" action="edit" resource="${course}"><g:icon name="edit"/></g:link></h1>
+        <g:link class="button-primary button button-create with-icon" controller="grade" action="create"><g:icon name="document"/>add grade</g:link>
 
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
+        <h1>${course.name}<g:link class="icon-only" action="edit" resource="${course}"><g:icon name="edit"/></g:link></h1>
 
-            <g:if test="${course.grades.size()}">
-                <h3 class="avg"><g:avg pre="avg" val="${course.average()}"/></h3>
-                <table class="table-list">
-                    <thead>
+        <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
+
+        <g:if test="${course.grades.size()}">
+            <h3 class="avg"><g:avg pre="avg" val="${course.average()}"/></h3>
+            <table class="table-list">
+                <thead>
+                <tr>
+                    <th>grade</th>
+                    <th>weight</th>
+                    <th>isFinal</th>
+                    <th>
+                </tr>
+                </thead>
+                <tbody>
+                <g:each var="grade" in="${course.grades}">
                     <tr>
-                        <th>grade</th>
-                        <th>weight</th>
-                        <th>isFinal</th>
-                        <th>
+                        <td>${grade.grade}</td>
+                        <td>${grade.weight}</td>
+                        <td>${grade.isFinal}</td>
+                        <td>
+                            <g:form class="delete-form" resource="${grade}" method="DELETE">
+                                <g:submit/>
+                            </g:form>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <g:each var="grade" in="${course.grades}">
-                        <tr>
-                            <td>${grade.grade}</td>
-                            <td>${grade.weight}</td>
-                            <td>${grade.isFinal}</td>
-                            <td>
-                                <g:form class="delete-form" resource="${grade}" method="DELETE">
-                                    <g:submit/>
-                                </g:form>
-                            </td>
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </g:if>
-        </div>
+                </g:each>
+                </tbody>
+            </table>
+        </g:if>
+        <g:else>
+            <h4>there are no grades in this course</h4>
+        </g:else>
     </body>
 </html>
