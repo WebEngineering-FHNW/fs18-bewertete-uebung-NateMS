@@ -40,12 +40,15 @@ class CourseController {
     }
 
     def save(Course course) {
-        if (course == null || course?.semester?.user?.email != session.user?.email) {
+        Semester s = Semester.findById(params.semesterId)
+        if (course == null || s?.user?.email != session.user?.email) {
             notFound()
             return
         }
 
         try {
+            course.name = params.name
+            course.semester = s
             courseService.save(course)
         } catch (ValidationException e) {
             respond course.errors, view:'create'

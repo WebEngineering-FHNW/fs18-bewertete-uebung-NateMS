@@ -54,7 +54,12 @@ class GradeController {
         }
 
         try {
-            grade.grade = grade.grade / 10
+            grade.grade = ((float)grade.grade) / 10
+            /* I'm not sure what is happening, but a 5.0 evaluates to a 50 in the end and a 5 works.
+                I divided by temp so decimals work, but now of course those numbers without decimals are off
+                by an order of magnitude
+             */
+
             gradeService.save(grade)
         } catch (ValidationException e) {
             respond grade.errors, view:'create'
