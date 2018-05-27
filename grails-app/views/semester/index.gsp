@@ -18,10 +18,6 @@
 
         <h1>My semesters</h1>
 
-        <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-        </g:if>
-
         <g:render template="semesters" model="[semesterList: semesterList, semesterCount: semesterCount]"/>
 
         <g:render template="create"/>

@@ -16,9 +16,6 @@
 
 <h1>New Grade</h1>
 
-<g:if test="${flash.message}">
-    <div class="message" role="status">${flash.message}</div>
-</g:if>
 <g:hasErrors bean="${this.grade}">
     <ul class="errors" role="alert">
         <g:eachError bean="${this.grade}" var="error">
@@ -30,6 +27,11 @@
     <g:form action="save" method="POST" class="create-form">
         <input type="text" name="grade" placeholder="grade" value="${grade.grade}">
         <input type="text" name="weight" placeholder="weight" value="${grade.weight}">
+        <select name="isFinal" id="isFinal">
+            <option value="0">Normal Exam</option>
+            <option value="1">Final Exam</option>
+        </select>
+        <g:select name="course" from="${courses}" optionKey="id" optionValue="name" />
         <g:submitButton name="create" class="save" value="save" />
     </g:form>
 </section>

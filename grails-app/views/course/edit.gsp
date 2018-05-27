@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'course.label', default: 'Course')}" />
-        <title><g:message code="default.edit.label" args="[entityName]" /></title>
-    </head>
-    <body>
-        <a href="#edit-course" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
-        <div id="edit-course" class="content scaffold-edit" role="main">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.course}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.course}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
-            <g:form resource="${this.course}" method="PUT">
-                <g:hiddenField name="version" value="${this.course?.version}" />
-                <fieldset class="form">
-                    <f:all bean="course"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                </fieldset>
-            </g:form>
-        </div>
-    </body>
+<head>
+    <meta name="layout" content="main" />
+    <g:set var="entityName" value="${message(code: 'course.label', default: 'Course')}" />
+    <title><g:message code="default.show.label" args="[entityName]" /></title>
+</head>
+<body>
+
+<content tag="navbar">
+    <ul>
+        <li><g:link class="list" controller="home" action="index">Home</g:link></li>
+        <li><g:link class="list" controller="semester" action="index">Semesters</g:link></li>
+        <li><g:link class="list" controller="semester" action="show" params="[id:course.semester.id]">${course.semester.description}</g:link></li>
+        <li><g:link class="list" controller="course" action="show" params="[id:course.id]">${course.name}</g:link></li>
+        <li>edit ${course.name}</li>
+    </ul>
+</content>
+
+<g:form action="update" method="PUT" class="edit-form">
+    <input type="text" name="name" placeholder="name" value="${course.name}">
+    <input type="hidden" name="id" value="${course.id}">
+    <input type="hidden" name="semesterId" value="${course.semester.id}">
+    <g:submitButton name="save" class="save" value="save" />
+</g:form>
+
+<h3 class="avg"><g:avg pre="avg" val="${course.average()}"/></h3>
+
+<h3>Exams</h3>
+<g:render template="grades" model="[grades: normalGrades, course: course, preAverave: preAverage]" />
+
+<h3>Finals</h3>
+<g:render template="grades" model="[grades: finalGrades, course: course, preAverage: false]" />
+</body>
 </html>

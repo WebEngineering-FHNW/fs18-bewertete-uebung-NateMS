@@ -14,17 +14,14 @@
             </ul>
         </content>
 
-        <g:link class="button-primary button button-create with-icon" controller="grade" action="create"><g:icon name="document"/>add grade</g:link>
+        <g:link class="button-primary button button-create with-icon" controller="grade" action="create" params="[semId: semester.id]"><g:icon name="document"/>add grade</g:link>
 
         <div id="show-semester" class="content scaffold-show" role="main">
-
             <h1>${semester.description}<g:link class="icon-only" action="edit" resource="${semester}"><g:icon name="edit"/></g:link></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
 
             <g:render template="courses" model="[semester: semester]" />
 
+            <g:render template="create_course" model="[semester: semester]" />
         </div>
     </body>
 </html>

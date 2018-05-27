@@ -11,12 +11,12 @@ class SemesterController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond semesterService.list(fetch: [userId: session.user.id]), model:[semesterCount: semesterService.count()], newsemester:new Semester(params)
+        respond Semester.findAllByUser(session.user), model:[semesterCount: Semester.count()], newsemester:new Semester(params)
     }
 
     def show(Long id) {
-        Semester s = semesterService.get(id)
-        if (s.user.email != session.user?.email) {
+        Semester s = Semester.get(id)
+        if (!s || s.user?.email != session.user?.email) {
             notFound()
             return
         }
@@ -25,17 +25,21 @@ class SemesterController {
             semester == s
         }.list(sort: 'name', order: 'asc')
 
-        respond semesterService.get(id), model:[courses: courses]
+        respond s, model:[courses: courses]
     }
 
     def edit(Long id) {
-        Semester semester = semesterService.get(id)
-        if (id == null || semester.user.email != session.user?.email) {
+        Semester s = Semester.get(id)
+        if (!s || s.user?.email != session.user?.email) {
             notFound()
             return
         }
 
-        respond semester
+        def courses = Course.where {
+            semester == s
+        }.list(sort: 'name', order: 'asc')
+
+        respond s, model:[courses: courses]
     }
 
     def save(Semester semester) {
@@ -56,6 +60,7 @@ class SemesterController {
         request.withFormat {
             form multipartForm {
                 flash.message = semester.description + ' has been created'
+                flash.class = "success"
                 redirect semester
             }
             '*' { respond index, [status: CREATED] }
@@ -63,14 +68,16 @@ class SemesterController {
     }
 
     def update(Semester semester) {
-
-        if (semester == null || semester.user.email != session.user?.email) {
+        Semester s = Semester.findById(semester.id)
+        if (!s || s.user?.email != session.user?.email) {
             notFound()
             return
         }
 
+        s.description = semester.description
+
         try {
-            semesterService.save(semester)
+            semesterService.save(s)
         } catch (ValidationException e) {
             respond semester.errors, view:'edit'
             return
@@ -78,7 +85,8 @@ class SemesterController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'semester.label', default: 'Semester'), semester.id])
+                flash.message = "Semester has been renamed to '" + s.description + "'"
+                flash.class = "success"
                 redirect semester
             }
             '*'{ respond semester, [status: OK] }
@@ -96,7 +104,8 @@ class SemesterController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'semester.label', default: 'Semester'), id])
+                flash.message = "semester deleted"
+                flash.class = "success"
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -106,7 +115,8 @@ class SemesterController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'semester.label', default: 'Semester'), params.id])
+                flash.message = "not found / not allowed"
+                flash.class = "error"
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

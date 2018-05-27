@@ -10,20 +10,18 @@
         <ul>
             <li><g:link class="list" controller="home" action="index">Home</g:link></li>
             <li><g:link class="list" action="index">Semesters</g:link></li>
-            <li>${semester.description}</li>
+            <li><g:link class="list" controller="semester" action="show" params="[id:semester.id]">${semester.description}</g:link></li>
+            <li>edit ${semester.description}</li>
         </ul>
     </content>
 
     <g:link class="button-primary button button-create with-icon" controller="grade" action="create"><g:icon name="document"/>add grade</g:link>
 
-    <g:form action="update" method="POST" class="edit-form">
+    <g:form action="update" method="PUT" class="edit-form">
         <input type="text" name="description" placeholder="description" value="${semester.description}">
+        <input type="hidden" name="id" value="${semester.id}">
         <g:submitButton name="save" class="save" value="save" />
     </g:form>
-
-    <g:if test="${flash.message}">
-        <div class="message" role="status">${flash.message}</div>
-    </g:if>
 
     <g:render template="courses" model="[semester: semester]" />
 </body>

@@ -6,24 +6,41 @@ import static org.springframework.http.HttpStatus.*
 class CourseController {
 
     CourseService courseService
+    GradeCalcuateService gs = new GradeCalcuateService()
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond courseService.list(params), model:[courseCount: courseService.count()]
+    def index() {
+        redirect action: 'index', controller: 'Semester'
     }
 
     def show(Long id) {
-        respond courseService.get(id)
-    }
+        Course c = Course.get(id)
+        if (c.semester.user.email != session.user?.email) {
+            notFound()
+            return
+        }
 
-    def create() {
-        respond new Course(params)
+        def normalGrades = Grade.where {
+            course == c
+            isFinal == false
+        }.list(sort: 'grade', order: 'asc')
+
+        def finalGrades = Grade.where {
+            course == c
+            isFinal == true
+        }.list(sort: 'grade', order: 'asc')
+
+        def preAverage = false
+        if (normalGrades && finalGrades) {
+            preAverage = gs.getAverage(normalGrades)
+        }
+
+        respond c, model:[normalGrades: normalGrades, finalGrades: finalGrades, preAverage: preAverage]
     }
 
     def save(Course course) {
-        if (course == null) {
+        if (course == null || course?.semester?.user?.email != session.user?.email) {
             notFound()
             return
         }
@@ -37,19 +54,42 @@ class CourseController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'course.label', default: 'Course'), course.id])
-                redirect course
+                flash.message = "Course '" + course.name + "' created"
+                flash.class = "success"
+                redirect action: 'show', controller: 'Semester', id : course.semesterId
             }
             '*' { respond course, [status: CREATED] }
         }
     }
 
     def edit(Long id) {
-        respond courseService.get(id)
+        Course c = courseService.get(id)
+        if (id == null || c.semester.user.email != session.user?.email) {
+            notFound()
+            return
+        }
+
+        // bad, copy pasted from show()
+        def normalGrades = Grade.where {
+            course == c
+            isFinal == false
+        }.list(sort: 'grade', order: 'asc')
+
+        def finalGrades = Grade.where {
+            course == c
+            isFinal == true
+        }.list(sort: 'grade', order: 'asc')
+
+        def preAverage = false
+        if (normalGrades && finalGrades) {
+            preAverage = gs.getAverage(normalGrades)
+        }
+
+        respond c, model:[normalGrades: normalGrades, finalGrades: finalGrades, preAverage: preAverage]
     }
 
     def update(Course course) {
-        if (course == null) {
+        if (course == null || course.semester.user.email != session.user?.email) {
             notFound()
             return
         }
@@ -63,7 +103,8 @@ class CourseController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'course.label', default: 'Course'), course.id])
+                flash.message = "Course has been renamed to '" + course.name + "'"
+                flash.class = "success"
                 redirect course
             }
             '*'{ respond course, [status: OK] }
@@ -71,7 +112,7 @@ class CourseController {
     }
 
     def delete(Long id) {
-        if (id == null) {
+        if (id == null || course.semester.user.email != session.user?.email) {
             notFound()
             return
         }
@@ -80,8 +121,9 @@ class CourseController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'course.label', default: 'Course'), id])
-                redirect action:"index", method:"GET"
+                flash.message = "course deleted"
+                flash.class = "success"
+                redirect controller: "semester", action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -90,8 +132,9 @@ class CourseController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'course.label', default: 'Course'), params.id])
-                redirect action: "index", method: "GET"
+                flash.message = "not found / not allowed"
+                flash.class = "error"
+                redirect controller: "semester", action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

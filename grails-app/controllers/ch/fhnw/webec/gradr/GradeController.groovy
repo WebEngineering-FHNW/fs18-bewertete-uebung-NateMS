@@ -14,8 +14,31 @@ class GradeController {
         respond gradeService.list(params), model:[gradeCount: gradeService.count()]
     }
 
-    def create() {
-        respond new Grade(params)
+    // there are three possibilites
+    // I want to limit the courses in the select field based on where we come from
+    def create(long semId, long courId) {
+        def courses = [];
+        if (courId) {
+            Course c = Course.findById(courId);
+            if (c.semester.user.email == session.user?.email) {
+                courses = [c]
+            }
+        } else if (semId) {
+            Semester s = Semester.findById(semId)
+            if (s.user.email == session.user?.email) {
+                courses = Course.findAllBySemester(s)
+            }
+        }
+
+        if (courses.size() == 0) {
+            def semesters = Semester.findAllByUser(session.user)
+            courses = []
+            for (s in semesters) {
+                courses += Course.findAllBySemester(s)
+            }
+        }
+
+        respond new Grade([weight:1, grade:5.0]), model: [courses : courses]
     }
 
     def save(Grade grade) {
@@ -24,12 +47,14 @@ class GradeController {
             return
         }
 
-        if(!(session.user?.email == grade.user().email) ){
+        if(!(session.user?.email == grade.course?.semester?.user?.email) ){
             flash.message = "Sorry, you can only edit your own entries."
-            redirect(action:index)
+            flash.class = "error"
+            redirect(controller: "semester", action: "index")
         }
 
         try {
+            grade.grade = grade.grade / 10
             gradeService.save(grade)
         } catch (ValidationException e) {
             respond grade.errors, view:'create'
@@ -38,46 +63,18 @@ class GradeController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'grade.label', default: 'Grade'), grade.id])
-                redirect grade
+                flash.message = 'The grade ' + grade.grade + ' has been added to ' + grade.course.name
+                flash.class = "success"
+                redirect(controller: "course", action: "show", id: grade.courseId)
             }
             '*' { respond grade, [status: CREATED] }
         }
     }
 
-    def edit(Long id) {
-        respond gradeService.get(id)
-    }
-
-    def update(Grade grade) {
-        if (grade == null) {
-            notFound()
-            return
-        }
-
-        if(!(session.user.email == grade.user().email) ){
-            flash.message = "Sorry, you can only edit your own entries."
-            redirect(action:index)
-        }
-
-        try {
-            gradeService.save(grade)
-        } catch (ValidationException e) {
-            respond grade.errors, view:'edit'
-            return
-        }
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'grade.label', default: 'Grade'), grade.id])
-                redirect grade
-            }
-            '*'{ respond grade, [status: OK] }
-        }
-    }
-
     def delete(Long id) {
-        if (id == null || session.user?.email != grade.user().email) {
+        Grade g = Grade.findById(id)
+        def course = g.course
+        if (!g || session.user?.email != course.semester.user.email) {
             notFound()
             return
         }
@@ -86,8 +83,9 @@ class GradeController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'grade.label', default: 'Grade'), id])
-                redirect action:"index", method:"GET"
+                flash.message = 'The grade has been deleted from ' + course.name
+                flash.class = "success"
+                redirect controller: "course", action: "show", id: course.id, method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -96,8 +94,9 @@ class GradeController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'grade.label', default: 'Grade'), params.id])
-                redirect action: "index", method: "GET"
+                flash.message = "not found / not allowed"
+                flash.class = "error"
+                redirect controller: "course", action: "show", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }
