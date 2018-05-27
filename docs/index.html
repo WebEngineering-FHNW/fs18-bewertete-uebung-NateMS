@@ -47,7 +47,8 @@
             border: 1px solid #BCBEC0;
             padding: 2px;
             background-color: #eee;
-            font:12px Monaco,Consolas,"Andale  Mono","DejaVu Sans Mono",monospace
+            font:12px Monaco,Consolas,"Andale  Mono","DejaVu Sans Mono",monospace;
+            display: inline-block;
         }
     </style>
 </head>
@@ -60,6 +61,12 @@
         <article>
             <h2>Project Description</h2>
             <p>This is a very simple webapplication which allows users to keep track of their grades. Users can login, see their semesters, courses, and grades. The grade average is automatically displayed foreach course and also the overall grade for the semester.</p>
+            <p>By default, I created a user in <code>BootsTrap.groovy</code> and a few Semesters, courses and grades belonging to that user.</p>
+            <h3>Project Satisfaction</h3>
+            <p>I never neither Groovy or Grails before but I thought it was quite easy to get into those. I have quite a bit of experience in web development so the overall process was nothing new.</p>
+            <p>Unfortunately I didn't have enough time to finish the project as I intended to. The login process is incomplete (no registration, profile view, etc.) and I would have loved to make a few forms a bit more user friendly. I also wasn't able to check for possible vulnerabilities.<br>
+                Also I wanted to display it a bit nicer with the grades, e.g. with the finals etc. There is also no check when adding more than one final exam to the same course, which would lead to an illegal state.
+            </p>
         </article>
         <article>
             <h2>Project Structure</h2>
@@ -90,6 +97,9 @@
             <section>
                 <h3>Frontend</h3>
                 <p>The Frontend is very simple. The views are located in <code>grails-app/views</code>. These are all <code>.gsp</code> files. All View files extend from the <code>layouts/main.gsp</code> base layout. All assets are located in <code>grails-app/assets</code>.</p>
+                <h4>Icons</h4>
+                <p>Icons are provided through <a href="http://icons8.com">icons8.com</a>. The icons are located in <code>src/main/resources/public/icons</code>.</p>
+                <p>I created the Taglib <code>IconTagLib.groovy</code> for easy usage. E.g. for the trash icon you can just type <code>&lt;g:icon name="trash" /&gt;</code> and it will include the svg.</p>
             </section>
         </article>
         <article>
