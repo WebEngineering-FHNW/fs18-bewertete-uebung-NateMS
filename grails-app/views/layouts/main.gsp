@@ -7,6 +7,8 @@
             <g:layoutTitle default="Gradr"/>
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="https://fonts.googleapis.com/css?family=Comfortaa|Montserrat" rel="stylesheet">
+
         <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 
         <asset:stylesheet src="application.css"/>
@@ -19,7 +21,7 @@
                <div class="container main-wrapper">
                    <header class="header">
                        <span class="logo-wrapper">
-                           <a class="logo" href="${createLink(uri: '/')}"><g:logo class="test"/>Gradr</a>
+                           <a class="logo" href="${createLink(uri: '/')}"><g:logo/>Gradr</a>
                        </span>
                        <span class="nav-wrapper">
                            <nav>
@@ -36,6 +38,9 @@
                        </span>
                    </header>
                    <section class="content-wrapper">
+                       <g:if test="${flash.message}">
+                           <div class="message ${flash.class}" role="status">${flash.message}</div>
+                       </g:if>
                        <g:layoutBody/>
                    </section>
                    <footer class="footer">
