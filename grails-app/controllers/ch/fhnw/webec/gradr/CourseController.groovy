@@ -115,6 +115,8 @@ class CourseController {
     }
 
     def delete(Long id) {
+        Course course = Course.findById(id)
+        def semId = course.semesterId
         if (id == null || course.semester.user.email != session.user?.email) {
             notFound()
             return
@@ -126,7 +128,7 @@ class CourseController {
             form multipartForm {
                 flash.message = "course deleted"
                 flash.class = "success"
-                redirect controller: "semester", action:"index", method:"GET"
+                redirect controller: "semester", action:"show", id:semId, method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
