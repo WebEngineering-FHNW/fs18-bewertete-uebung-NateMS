@@ -42,4 +42,23 @@ I'm particular proud of:
 
 ## Project grading 
 
-< to be filled by lecturer>
+Static html description given and fully valid.
+
+The application works nicely.
+
+Functionality is in principle CRUD operations over 4 domain classes with one-to-many relations with
+specialized views per user/semester. User login with basic management.
+
+Git log is very good.
+Some good unit tests, some tests failing (default), no UI integration tests.
+HTML validity has some issues. First and foremost: Duplicate ID _method.
+
+Since you hit the ceiling anyway, I spare the effort of grading extra points.
+Anyway, I appreciate your use of taglibs and interceptors and the overall nice
+appearance of the application.
+
+Congratulations! 
+Very nicely done.
+
+Grade: 6.0
+
